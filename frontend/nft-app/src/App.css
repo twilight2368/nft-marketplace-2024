@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.App {
+    @apply bg-black;
+    @apply text-white;
+    @apply min-h-screen;
+}
+
+.home-background{
+    background: rgb(50,0,68);
+    background: linear-gradient(180deg, rgba(50,0,68,1) 2.5%, rgba(0,0,0,1) 100%);
+}
+
+.poetsen-one-regular {
+  font-family: "Poetsen One", sans-serif;
+}
+
+.nunito{
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
