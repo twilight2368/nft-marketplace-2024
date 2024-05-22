@@ -1,0 +1,39 @@
+.bg-silver {
+  background: hsla(186, 33%, 94%, 1);
+
+  background: linear-gradient(
+    90deg,
+    hsla(186, 33%, 94%, 1) 0%,
+    hsla(216, 41%, 79%, 1) 100%
+  );
+
+  background: -moz-linear-gradient(
+    90deg,
+    hsla(186, 33%, 94%, 1) 0%,
+    hsla(216, 41%, 79%, 1) 100%
+  );
+
+  background: -webkit-linear-gradient(
+    90deg,
+    hsla(186, 33%, 94%, 1) 0%,
+    hsla(216, 41%, 79%, 1) 100%
+  );
+}
+
+.bg-gold {
+  background: #ffdf00;
+  background: linear-gradient(to bottom, #ffdf00 0%, #f0d000 100%);
+  background: -webkit-linear-gradient(top, #ffdf00 0%, #f0d000 100%);
+  background: -moz-linear-gradient(top, #ffdf00 0%, #f0d000 100%);
+  background: -o-linear-gradient(top, #ffdf00 0%, #f0d000 100%);
+  background: -ms-linear-gradient(top, #ffdf00 0%, #f0d000 100%);
+}
+
+.bg-bronze {
+  background: #cd7f32;
+  background: linear-gradient(to bottom, #cd7f32 0%, #be7023 100%);
+  background: -webkit-linear-gradient(top, #cd7f32 0%, #be7023 100%);
+  background: -moz-linear-gradient(top, #cd7f32 0%, #be7023 100%);
+  background: -o-linear-gradient(top, #cd7f32 0%, #be7023 100%);
+  background: -ms-linear-gradient(top, #cd7f32 0%, #be7023 100%);
+}

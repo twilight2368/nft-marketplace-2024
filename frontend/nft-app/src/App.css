@@ -2,23 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 .App {
     @apply bg-black;
     @apply text-white;
     @apply min-h-screen;
+    @apply roboto;
 }
 
-.home-background{
+.home-background {
     background: rgb(50,0,68);
     background: linear-gradient(180deg, rgba(50,0,68,1) 2.5%, rgba(0,0,0,1) 100%);
 }
 
+/*? Font for the heading component */
 .poetsen-one-regular {
   font-family: "Poetsen One", sans-serif;
 }
 
+/*? Font for the function component */
 .nunito{
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+/*? Font roboto*/
+.roboto{
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/** Scroll-bar */
+.hello::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+.hello::-webkit-scrollbar-track {
+  @apply bg-black
+}
+
+/* Handle */
+.hello::-webkit-scrollbar-thumb {
+  @apply bg-blue-400;
+  @apply rounded-full
+}
+
+/* Handle on hover */
+.hello::-webkit-scrollbar-thumb:hover {
+  @apply bg-green-600;
 }

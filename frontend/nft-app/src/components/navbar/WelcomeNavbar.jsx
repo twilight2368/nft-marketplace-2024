@@ -17,21 +17,20 @@ export default function WelcomeNavbar() {
           <span className="bg-clip-text bg-[#f89b29] ">NFT</span>
         </div>
         <div className=" w-1/3">
-          <div className="w-full flex justify-center items-center gap-24 flex-shrink font-semibold nunito">
+          <div className="w-full flex justify-center items-center gap-20 flex-shrink font-semibold nunito">
             <div>Home</div>
             <div>Marketplace</div>
+            <div>Collections</div>
             <div>Contact</div>
           </div>
         </div>
         <div className="w-1/3 pl-64 pr-14">
           <div className="w-full grid grid-cols-2 place-items-center justify-items-end ">
             <div>
-              <Button
-                color="danger"
-                variant="flat"
-                size="lg"        
-              >
-                <span className=" text-lg nunito font-bold text-orange-500 ">Sign up</span>
+              <Button color="danger" variant="flat" size="lg">
+                <span className=" text-lg nunito font-bold text-orange-500 ">
+                  Sign up
+                </span>
               </Button>
             </div>
             <div>
@@ -39,10 +38,9 @@ export default function WelcomeNavbar() {
                 color="primary"
                 variant="shadow"
                 size="lg"
-                className=" bg-black/0 border-4 border-blue-600"
+                className=" bg-black/0 border-2 border-blue-800"
               >
                 <span className=" text-lg nunito font-bold text-purple-600 ">
-                  {" "}
                   Log in
                 </span>
               </Button>

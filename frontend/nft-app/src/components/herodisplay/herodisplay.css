@@ -1,0 +1,28 @@
+:root {
+  --gradient-nft-hero-text: linear-gradient(
+    90deg,
+    rgba(226, 0, 255, 1) 0%,
+    rgba(136, 0, 255, 1) 25%,
+    rgba(0, 48, 255, 1) 50%,
+    rgba(136, 0, 255, 1) 75%,
+    rgba(226, 0, 255, 1) 100%
+  );
+}
+
+.nft-hero-text {
+  background: purple;
+  background-size: 500%;
+  background-image: var(--gradient-nft-hero-text);
+  color: transparent;
+  background-clip: text;
+  animation: bg-text-nft-animation 5s infinite alternate;
+}
+
+@keyframes bg-text-nft-animation {
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
+}
