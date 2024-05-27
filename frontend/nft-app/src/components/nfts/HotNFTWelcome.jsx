@@ -7,10 +7,10 @@ export default function HotNFTWelcome() {
   return (
     <div>
       <Card className=" bg-black border-1 border-purple-600 shadow-md shadow-blue-600  text-white">
-        <CardBody className="overflow-y-hidden p-5 ">
+        <CardBody className="overflow-y-hidden p-5 pb-1">
           <Image src={NFTsampleImg} className="mb-0" />
         </CardBody>
-        <CardFooter className="p-5 px-6">
+        <CardFooter className=" pt-1 pb-4 px-6">
           <div className=" pb-2">
             <div>
               <span className="nunito text-lg font-bold">

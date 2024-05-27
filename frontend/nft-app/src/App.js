@@ -1,13 +1,17 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import Welcome from "./pages/welcome/Welcome";
+import Notfound from "./pages/Notfound";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App dark">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Welcome />} />
+          <Route path="home" element={<Home />} />
+          <Route path="*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>
     </div>

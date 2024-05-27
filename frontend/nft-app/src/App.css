@@ -13,6 +13,7 @@ html {
     @apply roboto;
 }
 
+
 .home-background {
     background: rgb(50,0,68);
     background: linear-gradient(180deg, rgba(50,0,68,1) 2.5%, rgba(0,0,0,1) 100%);

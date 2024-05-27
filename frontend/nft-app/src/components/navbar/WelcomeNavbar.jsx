@@ -1,6 +1,7 @@
 import React from "react";
 import LogoImage from "../../assets/icons/logo1.png";
 import { Button } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 export default function WelcomeNavbar() {
   return (
     <div>
@@ -18,13 +19,29 @@ export default function WelcomeNavbar() {
         </div>
         <div className=" w-1/3">
           <div className="w-full flex justify-center items-center gap-20 flex-shrink font-semibold nunito">
-            <div>Home</div>
-            <div>Marketplace</div>
-            <div>Collections</div>
-            <div>Contact</div>
+            <div>
+              <Link className=" hover:text-blue-500 " to="/home">
+                Home
+              </Link>
+            </div>
+            <div>
+              <Link className=" hover:text-blue-500 " to="/marketplace">
+                Marketplace
+              </Link>
+            </div>
+            <div>
+              <Link className=" hover:text-blue-500 " to="/collections">
+                Collections
+              </Link>
+            </div>
+            <div>
+              <Link className=" hover:text-blue-500 " to="/contact">
+                Contact
+              </Link>
+            </div>
           </div>
         </div>
-        <div className="w-1/3 pl-64 pr-14">
+        <div className="w-1/3 pl-80 pr-14">
           <div className="w-full grid grid-cols-2 place-items-center justify-items-end ">
             <div>
               <Button color="danger" variant="flat" size="lg">

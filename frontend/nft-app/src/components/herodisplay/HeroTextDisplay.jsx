@@ -6,7 +6,7 @@ export default function HeroTextDisplay() {
   return (
     <div className="w-full h-full pt-20 pl-28">
       <div className="mb-5 flex flex-col gap-4">
-        <h1 className=" text-6xl font-black ">Discover, Collect and Sell</h1>
+        <h1 className=" text-6xl font-black pl-20 ">Discover, Collect and Sell</h1>
         <h1 className="text-5xl font-black text-center ">
           Digital arts <span className="nft-hero-text ">NFTs</span>
         </h1>

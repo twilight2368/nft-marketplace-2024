@@ -9,7 +9,7 @@ export default function TopCollectionWelcome() {
       <div className=" w-full pl-20 text-4xl font-bold mb-14">
         <h2>🌈Explore best combos</h2>
       </div>
-      <div className="px-32 grid grid-cols-2 grid-rows-2 gap-10 mb-16">
+      <div className="px-60 grid grid-cols-2 grid-rows-2 gap-x-20 gap-y-10 mb-16">
         <CollectionWelcome />
         <CollectionWelcome />
         <CollectionWelcome />

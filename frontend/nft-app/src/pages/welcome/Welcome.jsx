@@ -11,7 +11,7 @@ import { Button } from "@nextui-org/react";
 
 export default function Welcome() {
   return (
-    <div>
+    <div className="dark">
       <div id="welcomenavbar" className="mb-16">
         <WelcomeNavbar />
       </div>
