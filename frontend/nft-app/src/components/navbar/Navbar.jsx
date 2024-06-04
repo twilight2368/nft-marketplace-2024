@@ -14,8 +14,8 @@ const listOfLink = [
   },
   { label: "Collections", route: "collections" },
   {
-    label: "Contacts",
-    route: "contacts",
+    label: "Restaurant",
+    route: "restaurant",
   },
 ];
 

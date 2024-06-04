@@ -42,22 +42,22 @@ html {
 }
 
 /** Scroll-bar */
-.hello::-webkit-scrollbar {
+.scrollapplied::-webkit-scrollbar {
   width: 6px;
 }
 
 /* Track */
-.hello::-webkit-scrollbar-track {
+.scrollapplied::-webkit-scrollbar-track {
   @apply bg-black
 }
 
 /* Handle */
-.hello::-webkit-scrollbar-thumb {
+.scrollapplied::-webkit-scrollbar-thumb {
   @apply bg-blue-400;
   @apply rounded-full
 }
 
 /* Handle on hover */
-.hello::-webkit-scrollbar-thumb:hover {
+.scrollapplied::-webkit-scrollbar-thumb:hover {
   @apply bg-green-600;
 }

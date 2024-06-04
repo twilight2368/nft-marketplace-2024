@@ -12,7 +12,7 @@ export default function Notfound() {
         </div>
 
         <div>
-          <h1 className="text-center nunito font-black text-6xl  bg-gradient-to-r from-orange-400 to-rose-500 text-white/0 bg-clip-text">
+          <h1 className="text-center nunito font-black text-6xl  bg-gradient-to-r from-orange-400 to-red-600  text-white/0 bg-clip-text">
             Uh-Oh
           </h1>
           <div className="text-center text-xl mt-5 mb-5 text-gray-500 ">

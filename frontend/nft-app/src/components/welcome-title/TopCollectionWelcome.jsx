@@ -15,7 +15,7 @@ export default function TopCollectionWelcome() {
         <CollectionWelcome />
         <CollectionWelcome />
       </div>
-      <div className='w-full text-center'>
+      <div className="w-full text-center">
         <Button variant="bordered" color="warning">
           <div>Explore all collections</div>
           <div>
