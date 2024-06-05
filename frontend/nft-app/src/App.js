@@ -6,6 +6,7 @@ import Home from "./pages/home/Home";
 import LoginPage from "./pages/login/LoginPage";
 import Register from "./pages/register/Register";
 import MarketplaceNFT from "./pages/marketNFT/MarketplaceNFT";
+import CollectionsPage from "./pages/collections/CollectionsPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<Register />} />
           <Route path="marketplace" element={<MarketplaceNFT />} />
+          <Route path="collections" element={<CollectionsPage/>}/>
           <Route path="*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>

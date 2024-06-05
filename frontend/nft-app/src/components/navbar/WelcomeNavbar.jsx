@@ -19,7 +19,7 @@ export default function WelcomeNavbar() {
           <span className="bg-clip-text bg-[#f89b29] ">NFT</span>
         </div>
         <div className=" w-1/3">
-          <div className="w-full flex justify-center items-center gap-20 flex-shrink font-semibold nunito">
+          <div className="w-full pl-28 flex justify-center items-center gap-20 flex-shrink font-semibold nunito">
             <div>
               <Link className=" hover:text-blue-500 " to="/home">
                 Home
