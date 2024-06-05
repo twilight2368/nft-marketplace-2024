@@ -1,8 +1,9 @@
 import React from "react";
 import LogoImage from "../../assets/icons/logo1.png";
 import { Button } from "@nextui-org/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function WelcomeNavbar() {
+  const navigate = useNavigate()
   return (
     <div>
       <div
@@ -44,7 +45,14 @@ export default function WelcomeNavbar() {
         <div className="w-1/3 pl-80 pr-14">
           <div className="w-full grid grid-cols-2 place-items-center justify-items-end ">
             <div>
-              <Button color="danger" variant="flat" size="lg">
+              <Button
+                color="danger"
+                variant="flat"
+                size="lg"
+                onClick={() => {
+                  navigate("/register");
+                }}
+              >
                 <span className=" text-lg nunito font-bold text-orange-500 ">
                   Sign up
                 </span>
@@ -56,6 +64,9 @@ export default function WelcomeNavbar() {
                 variant="shadow"
                 size="lg"
                 className=" bg-black/0 border-2 border-blue-800"
+                onClick={() => {
+                  navigate("/login");
+                }}
               >
                 <span className=" text-lg nunito font-bold text-purple-600 ">
                   Log in

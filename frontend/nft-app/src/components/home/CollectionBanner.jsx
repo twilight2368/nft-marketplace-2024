@@ -9,7 +9,7 @@ export default function CollectionBanner() {
         <div id="slide1" className="carousel-item relative w-full">
           <div className=" relative w-full">
             <Image src={BannerImg} className=" brightness-75" />
-            <div className=" absolute z-50 bottom-10 left-0 h-40 w-full px-20 flex flex-row items-center">
+            <div className=" absolute z-10 bottom-10 left-0 h-40 w-full px-20 flex flex-row items-center">
               <div className=" w-4/5 nunito">
                 <div>
                   <span className=" text-5xl poetsen-one-regular">
