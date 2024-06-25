@@ -1,0 +1,24 @@
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+  @apply  w-0;
+}
+.custom-file-input::before {
+  @apply bg-blue-400;
+  @apply p-3;
+  @apply rounded;
+  @apply duration-150;
+  content: 'Choose image';
+  display: inline-block;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+.custom-file-input:active::before {
+  @apply bg-blue-500;
+  @apply scale-95;
+}
+
+.custom-file-input::after{
+    content: ""
+}

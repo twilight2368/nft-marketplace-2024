@@ -31,11 +31,6 @@ export default function WelcomeNavbar() {
               </Link>
             </div>
             <div>
-              <Link className=" hover:text-blue-500 " to="/collections">
-                Collections
-              </Link>
-            </div>
-            <div>
               <Link className=" hover:text-blue-500 " to="/contact">
                 Contact
               </Link>

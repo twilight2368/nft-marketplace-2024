@@ -13,9 +13,6 @@ export default function Home() {
     <div>
       <Navbar>
         <div className=" py-20 ">
-          <div className=" px-20 mb-20 ">
-            <CollectionBanner />
-          </div>
           <div className="px-28  mb-20">
             <TopNFTDisplay />
           </div>
@@ -24,9 +21,6 @@ export default function Home() {
           </div>
           <div className="px-28  mb-20">
             <BroweNFTDisplay />
-          </div>
-          <div className="px-28  mb-20">
-            <CollectionDisplay />
           </div>
           <div className="px-28  mb-20">
             <RandomNFTDisplay />

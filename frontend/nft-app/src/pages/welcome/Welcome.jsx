@@ -35,9 +35,6 @@ export default function Welcome() {
         <div>
           <BrowserNFTWelcome />
         </div>
-        <div>
-          <TopCollectionWelcome />
-        </div>
         <div className=" px-60">
           <h2 className="text-center text-4xl font-bold mb-5">📦Blockchain</h2>
           <div className="text-lg px-10 text-center text-gray-500 mb-10">

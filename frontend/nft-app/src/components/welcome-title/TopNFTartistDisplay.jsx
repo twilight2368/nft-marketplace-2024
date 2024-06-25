@@ -58,32 +58,24 @@ function ArtistCard(props) {
     <>
       <div>
         <Card
-          className={
-            `text-write bg-black/0 nunito border-1 ` + ` ${display()}`
-          }
+          className={`text-write bg-black/0 nunito border-1 ` + ` ${display()}`}
         >
           <div className="h-32 flex flex-row p-2">
-            <div className="flex  items-center pl-0 p-2 pr-4">
+            <div className="flex  items-center pl-4 p-2 pr-8">
               <Image isBlurred src={ArtistAvatar} className="h-28" />
             </div>
             <div className="p-3">
-              <div className="mb-2">
+              <div className="mb-5">
                 <span className="text-purple-500 ">@</span>
                 <span>artist_username</span>
               </div>
 
               <div className=" flex flex-row w-full gap-5">
-                <div className="text-center w-1/2">
+                <div className="text-center w-full flex flex-row  justify-start items-center gap-3">
                   <div className="text-gray-500 text-2xl font-black roboto">
                     1.5k+
                   </div>
-                  <div className="text-gray-500 text-xs">followers</div>
-                </div>
-                <div className="text-center w-1/2">
-                  <div className="text-gray-500 text-2xl font-black roboto">
-                    1.5k+
-                  </div>
-                  <div className="text-gray-500 text-xs">NFTs</div>
+                  <div className="text-gray-500 text-xl font-bold">NFTs</div>
                 </div>
               </div>
             </div>
