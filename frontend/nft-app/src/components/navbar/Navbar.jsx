@@ -17,6 +17,7 @@ import {
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { BellIcon } from "@heroicons/react/24/solid";
+import { useLoginContext } from "../../context/LoginProvider";
 
 const listOfLink = [
   {
@@ -35,7 +36,7 @@ const listOfLink = [
 
 export default function Navbar(props) {
   const navigate = useNavigate();
-  const [login, useLogin] = useState(true);
+  const { login, userID } = useLoginContext();
 
   return (
     <div className=" min-h-screen w-full ">

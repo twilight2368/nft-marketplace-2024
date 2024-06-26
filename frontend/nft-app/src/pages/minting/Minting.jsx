@@ -13,18 +13,24 @@ import {
   Button,
   Select,
   SelectItem,
+  Switch,
 } from "@nextui-org/react";
 import PictureBefore from "../../assets/images/picture.png";
 export default function Minting() {
   const [selectedImage, setSelectedImage] = useState(PictureBefore);
+  const [nftImage, setNFTImage] = useState(null);
   const [chosenTag, setChosenTag] = useState(new Set());
+  const [sale, setSale] = useState(false);
+  const [nftName, setNFTName] = useState(null);
+  const [description, setDescription] = useState(null);
 
   const handleSelectionChange = (e) => {
     setChosenTag(new Set(e.target.value.split(",")));
   };
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setNFTImage(e.target.files[0]);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -33,6 +39,34 @@ export default function Minting() {
       reader.readAsDataURL(file);
     }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (nftName && description) {
+      const formDataToSend = new FormData();
+      formDataToSend.append("image", nftImage);
+      formDataToSend.append("NFTname", nftName);
+      formDataToSend.append("NFTdescription", description);
+
+      try {
+        const response = await fetch("http://localhost:8080/minting", {
+          method: "POST",
+          body: formDataToSend,
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          console.log("File uploaded successfully:", data);
+        } else {
+          console.error("Error uploading file:", data);
+        }
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    }
+  };
+
   return (
     <div>
       <Navbar>
@@ -82,6 +116,9 @@ export default function Minting() {
                     size="lg"
                     placeholder="Enter your NFT name"
                     className="w-full"
+                    onChange={(e) => {
+                      setNFTName(e.target.value);
+                    }}
                   />
                   <Textarea
                     isRequired
@@ -90,6 +127,9 @@ export default function Minting() {
                     placeholder="Enter your description"
                     size="lg"
                     className="w-full "
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                    }}
                   />
                   <Select
                     label="NFT tags"
@@ -100,10 +140,25 @@ export default function Minting() {
                     onChange={handleSelectionChange}
                     selectedKeys={chosenTag}
                   ></Select>
-                  <p className="text-small text-default-500 w-full px-2">Selected tags: </p>
+                  <p className="text-small text-default-500 w-full px-2">
+                    Selected tags:{" "}
+                  </p>
+                  <div className=" w-full pl-1">
+                    <Switch>Sale</Switch>
+                  </div>
+                  <Input
+                    isRequired
+                    type="number"
+                    label="Intial price"
+                    size="lg"
+                    placeholder="Enter your initial price"
+                    className="w-full"
+                  />
                 </CardBody>
                 <CardFooter className=" text-center w-full flex justify-center items-center">
-                  <Button>Mint</Button>
+                  <Button variant="flat" color="success" onClick={handleSubmit}>
+                    Mint
+                  </Button>
                 </CardFooter>
               </Card>
             </div>

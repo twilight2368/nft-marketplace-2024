@@ -1,14 +1,15 @@
-const express = require("express");
 const env = require("dotenv");
 const pool = require("../connection/database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+env.config();
+
 module.exports.signup_post = async (req, res) => {
   try {
     const input = req.body;
     console.log(input);
-    const data = await pool.query("select * from users where username = $1", [
+    const data = await pool.query("select * from users where user_name = $1", [
       input.username,
     ]);
     //console.log(data.rows[0]);

@@ -12,6 +12,9 @@ import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import Logotext from "../../components/logo/Logotext";
 import { motion } from "framer-motion";
 import LogoImg from "../../assets/icons/logo1.png";
+import { useNavigate } from "react-router-dom";
+import { useLoginContext } from "../../context/LoginProvider";
+
 export default function LoginPage() {
   return (
     <div className=" bg-purple-900/30 h-screen">
@@ -25,6 +28,43 @@ export default function LoginPage() {
 function FormInput(params) {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
+  const [inputUsername, setInputUsername] = useState();
+  const [inputPassword, setInputPassword] = useState();
+  const { login, setLogin, userID } = useLoginContext();
+
+  const navigate = useNavigate();
+
+  const loginProceed = async () => {
+    const data = {
+      username: inputUsername,
+      password: inputPassword,
+    };
+
+    fetch("http://localhost:8080/login", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        //console.log("response status: ", response.status);
+        if (!response.ok) {
+          throw new Error("Something went wrong");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setLogin(true);
+        navigate("/home");
+      })
+      .catch((e) => {
+        setLogin(false);
+      });
+  };
+
   return (
     <>
       <motion.div
@@ -50,11 +90,14 @@ function FormInput(params) {
               size="lg"
               color="primary"
               isClearable
-              type="email"
-              label="Email"
+              type="text"
+              label="Username"
               variant="flat"
-              placeholder="Enter your email"
+              placeholder="Enter your username"
               className="w-full mb-2"
+              onChange={(e) => {
+                setInputUsername(e.target.value);
+              }}
             />
             <Input
               size="lg"
@@ -77,12 +120,17 @@ function FormInput(params) {
                   )}
                 </button>
               }
+              onChange={(e) => {
+                setInputPassword(e.target.value);
+              }}
             />
             <Button
               color="secondary"
               variant="bordered"
               size="lg"
               className="nunito mt-2 mb-1"
+              isDisabled={!(inputPassword && inputUsername)}
+              onClick={loginProceed}
             >
               Login
             </Button>

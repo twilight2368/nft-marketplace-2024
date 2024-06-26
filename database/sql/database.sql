@@ -1,6 +1,8 @@
+
 CREATE TABLE IF NOT EXISTS users(
     user_id BIGSERIAL PRIMARY KEY,
     user_name VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     age INTEGER CHECK (age > 13),
     gender BOOLEAN,
@@ -8,13 +10,6 @@ CREATE TABLE IF NOT EXISTS users(
     amount INTEGER NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS transactions(
-    transaction_id BIGSERIAL PRIMARY KEY,
-    from_user INTEGER REFERENCES users(user_id) NOT NULL,
-    to_user INTEGER REFERENCES users(user_id) NOT NULL,
-    transaction_date DATE NOT NULL
-
-);
 
 CREATE TABLE IF NOT EXISTS mint_transactions(
     mint_transaction_id BIGSERIAL PRIMARY KEY,
@@ -23,7 +18,6 @@ CREATE TABLE IF NOT EXISTS mint_transactions(
     transaction_fee INTEGER NOT NULL,
     creator INTEGER REFERENCES users(user_id)
 );
-
 
 CREATE TABLE IF NOT EXISTS nfts(
     nft_id BIGSERIAL PRIMARY KEY,
@@ -47,8 +41,7 @@ CREATE TABLE IF NOT EXISTS tags(
 CREATE TABLE IF NOT EXISTS list_nft_tags(
     nft_id INTEGER REFERENCES nfts(nft_id),
     tag_id INTEGER REFERENCES tags(tag_id),
-    PRIMARY KEY (nft_id, tag_id),
-    description VARCHAR(255)
+    PRIMARY KEY (nft_id, tag_id)
 );
 
 CREATE TABLE IF NOT EXISTS coin(
@@ -61,3 +54,12 @@ CREATE TABLE IF NOT EXISTS coin_transactions(
     amount_coin INTEGER NOT NULL,
     transaction_date DATE NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS transactions(
+    transaction_id BIGSERIAL PRIMARY KEY,
+    from_user INTEGER REFERENCES users(user_id) NOT NULL,
+    to_user INTEGER REFERENCES users(user_id) NOT NULL,
+    transaction_date DATE NOT NULL,
+    nft_id INTEGER REFERENCES nfts(nft_id) NOT NULL
+);
+

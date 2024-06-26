@@ -11,25 +11,27 @@ import Minting from "./pages/minting/Minting";
 import NFTdetails from "./pages/nft/NFTdetails";
 import DashBoard from "./pages/dashboard/DashBoard";
 import UserInfor from "./pages/user/UserInfor";
+import { LoginProvider } from "./context/LoginProvider";
 
 function App() {
   return (
     <div className="App dark">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Welcome />} />
-          <Route path="home" element={<Home />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<Register />} />
-          <Route path="marketplace" element={<MarketplaceNFT />} />
-          <Route path="collections" element={<CollectionsPage />} />
-          <Route path="minting" element={<Minting />} />
-          <Route path="nft/:id/" element={<NFTdetails />}/>
-          <Route path="dashboard" element={<DashBoard/>} />
-          <Route path="account" element={<UserInfor/>} />
-          <Route path="*" element={<Notfound />} />
-        </Routes>
-        <Routes></Routes>
+        <LoginProvider>
+          <Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route path="home" element={<Home />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<Register />} />
+            <Route path="marketplace" element={<MarketplaceNFT />} />
+            <Route path="collections" element={<CollectionsPage />} />
+            <Route path="minting" element={<Minting />} />
+            <Route path="nft/:id/" element={<NFTdetails />} />
+            <Route path="dashboard" element={<DashBoard />} />
+            <Route path="account" element={<UserInfor />} />
+            <Route path="*" element={<Notfound />} />
+          </Routes>
+        </LoginProvider>
       </BrowserRouter>
     </div>
   );

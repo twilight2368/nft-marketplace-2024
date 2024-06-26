@@ -7,15 +7,16 @@ import {
   Input,
   Image,
   Link,
-  Button
+  Button,
 } from "@nextui-org/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImgHero from "../../assets/icons/nothing.png";
 import Logotext from "../../components/logo/Logotext";
 import { EyeFilledIcon } from "../login/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "../login/EyeSlashFilledIcon";
-import Logoimg from "../../assets/icons/logo1.png"
+import Logoimg from "../../assets/icons/logo1.png";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   return (
@@ -30,8 +31,56 @@ export default function Register() {
 }
 
 function InputForm(params) {
-    const [isVisible, setIsVisible] = useState(false);
-    const toggleVisibility = () => setIsVisible(!isVisible);
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
+  const [submit, setSubmit] = useState(false);
+  const [inputUsername, setInputUsername] = useState();
+  const [inputEmail, setInputEmail] = useState();
+  const [inputPassword, setInputPassword] = useState("");
+  const [confirmPassword, setConfirmpassword] = useState("");
+  const [errorshow, setErrorshow] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const data = {
+      username: inputUsername,
+      email: inputEmail,
+      password: inputPassword,
+    };
+
+    if (submit) {
+      fetch("http://localhost:8080/signup", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          //console.log("response status: ", response.status);
+          if (!response.ok) {
+            throw new Error("Something went wrong");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          setErrorshow(false);
+          if (submit === true) {
+            navigate("/login");
+          }
+        })
+        .catch((e) => {
+          if (submit) {
+            setErrorshow(true);
+            setSubmit(false);
+          }
+        });
+    }
+  }, [submit]);
+
   return (
     <>
       <motion.div
@@ -71,6 +120,9 @@ function InputForm(params) {
                     variant="flat"
                     placeholder="Enter your username"
                     className="w-full mb-2"
+                    onChange={(e) => {
+                      setInputUsername(e.target.value);
+                    }}
                   />
                   <Input
                     size="lg"
@@ -81,13 +133,16 @@ function InputForm(params) {
                     variant="flat"
                     placeholder="Enter your email"
                     className="w-full mb-2"
+                    onChange={(e) => {
+                      setInputEmail(e.target.value);
+                    }}
                   />
                   <Input
                     size="lg"
                     color="secondary"
                     label="Password"
                     variant="flat"
-                    placeholder="Enter your password"
+                    placeholder="Enter your password (8 characters or more)"
                     className="w-full mb-2"
                     type={isVisible ? "text" : "password"}
                     endContent={
@@ -103,6 +158,9 @@ function InputForm(params) {
                         )}
                       </button>
                     }
+                    onChange={(e) => {
+                      setInputPassword(e.target.value);
+                    }}
                   />
                   <Input
                     size="lg"
@@ -111,6 +169,7 @@ function InputForm(params) {
                     variant="flat"
                     placeholder="Confirm your password"
                     className="w-full mb-2"
+                    isInvalid={confirmPassword !== inputPassword}
                     type={isVisible ? "text" : "password"}
                     endContent={
                       <button
@@ -125,9 +184,16 @@ function InputForm(params) {
                         )}
                       </button>
                     }
+                    onChange={(e) => {
+                      setConfirmpassword(e.target.value);
+                    }}
                   />
                   <div className="px-3 mt-3">
-                    <Checkbox defaultSelected color="secondary">
+                    <Checkbox
+                      color="secondary"
+                      isSelected={isSelected}
+                      onValueChange={setIsSelected}
+                    >
                       Agree to the Terms and Conditions <Link>learn more</Link>
                     </Checkbox>
                   </div>
@@ -137,11 +203,35 @@ function InputForm(params) {
                       variant="ghost"
                       size="lg"
                       className="nunito mt-2 mb-1"
+                      isDisabled={
+                        !inputUsername ||
+                        !inputEmail ||
+                        !isSelected ||
+                        !(confirmPassword === inputPassword) ||
+                        inputPassword.trim().length < 8
+                      }
+                      onClick={(e) => {
+                        setSubmit(true);
+                      }}
                     >
                       Register
                     </Button>
+                    <div className=" h-5 ">
+                      {errorshow ? (
+                        <>
+                          <span className=" text-red-400 nunito">
+                            Oop! Something went wrong.
+                          </span>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
                     <div>
-                      <a href="/login" className="mt-1 text-sm nunito hover:underline text-blue-500 ">
+                      <a
+                        href="/login"
+                        className="mt-1 text-sm nunito hover:underline text-blue-500 "
+                      >
                         Already have an account
                       </a>
                     </div>
