@@ -66,7 +66,7 @@ function InputForm(params) {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
+          //console.log(data);
           setErrorshow(false);
           if (submit === true) {
             navigate("/login");

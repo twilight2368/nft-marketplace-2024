@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import MainFooter from "../../components/footer/MainFooter";
 import "./minting.css";
@@ -11,22 +11,20 @@ import {
   Input,
   Textarea,
   Button,
-  Select,
-  SelectItem,
   Switch,
 } from "@nextui-org/react";
 import PictureBefore from "../../assets/images/picture.png";
+import { useLoginContext } from "../../context/LoginProvider";
+
 export default function Minting() {
   const [selectedImage, setSelectedImage] = useState(PictureBefore);
   const [nftImage, setNFTImage] = useState(null);
-  const [chosenTag, setChosenTag] = useState(new Set());
   const [sale, setSale] = useState(false);
   const [nftName, setNFTName] = useState(null);
   const [description, setDescription] = useState(null);
+  const [price, setPrice] = useState(0);
 
-  const handleSelectionChange = (e) => {
-    setChosenTag(new Set(e.target.value.split(",")));
-  };
+  const { username, userID, accountname } = useLoginContext();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -48,10 +46,15 @@ export default function Minting() {
       formDataToSend.append("image", nftImage);
       formDataToSend.append("NFTname", nftName);
       formDataToSend.append("NFTdescription", description);
+      formDataToSend.append("NFTArtist", accountname);
+      formDataToSend.append("NFTUserID", userID);
+      formDataToSend.append("NFTsale", sale);
+      formDataToSend.append("NFTPrice", price);
 
       try {
         const response = await fetch("http://localhost:8080/minting", {
           method: "POST",
+          credentials: "include",
           body: formDataToSend,
         });
 
@@ -131,20 +134,14 @@ export default function Minting() {
                       setDescription(e.target.value);
                     }}
                   />
-                  <Select
-                    label="NFT tags"
-                    selectionMode="multiple"
-                    placeholder="Select tags"
-                    className="w-full"
-                    isRequired
-                    onChange={handleSelectionChange}
-                    selectedKeys={chosenTag}
-                  ></Select>
-                  <p className="text-small text-default-500 w-full px-2">
-                    Selected tags:{" "}
-                  </p>
                   <div className=" w-full pl-1">
-                    <Switch>Sale</Switch>
+                    <Switch
+                      onClick={(e) => {
+                        setSale(!sale);
+                      }}
+                    >
+                      Sale
+                    </Switch>
                   </div>
                   <Input
                     isRequired
@@ -153,6 +150,10 @@ export default function Minting() {
                     size="lg"
                     placeholder="Enter your initial price"
                     className="w-full"
+                    value={price}
+                    onChange={(e) => {
+                      setPrice(e.target.value);
+                    }}
                   />
                 </CardBody>
                 <CardFooter className=" text-center w-full flex justify-center items-center">

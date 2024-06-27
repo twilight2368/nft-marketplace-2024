@@ -6,7 +6,7 @@ import {
   CardHeader,
   Input,
 } from "@nextui-org/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EyeFilledIcon } from "./EyeFilledIcon";
 import { EyeSlashFilledIcon } from "./EyeSlashFilledIcon";
 import Logotext from "../../components/logo/Logotext";
@@ -28,15 +28,16 @@ export default function LoginPage() {
 function FormInput(params) {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
-  const [inputUsername, setInputUsername] = useState();
+  const [inputEmail, setInputEmail] = useState();
   const [inputPassword, setInputPassword] = useState();
-  const { login, setLogin, userID } = useLoginContext();
+  const { login, setLogin, setUserID, setUsername, setAccountname } =
+    useLoginContext();
 
   const navigate = useNavigate();
 
   const loginProceed = async () => {
     const data = {
-      username: inputUsername,
+      email: inputEmail,
       password: inputPassword,
     };
 
@@ -58,10 +59,18 @@ function FormInput(params) {
       .then((data) => {
         console.log(data);
         setLogin(true);
+        setUsername(data.username);
+        setUserID(data.userid);
+        setAccountname(data.accountname);
+        localStorage.setItem("login", "true");
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("accountname", data.accountname);
+        localStorage.setItem("userid", data.userid)
         navigate("/home");
       })
       .catch((e) => {
         setLogin(false);
+        localStorage.setItem("login", "false");
       });
   };
 
@@ -91,12 +100,12 @@ function FormInput(params) {
               color="primary"
               isClearable
               type="text"
-              label="Username"
+              label="Email"
               variant="flat"
-              placeholder="Enter your username"
+              placeholder="Enter your email"
               className="w-full mb-2"
               onChange={(e) => {
-                setInputUsername(e.target.value);
+                setInputEmail(e.target.value);
               }}
             />
             <Input
@@ -129,7 +138,7 @@ function FormInput(params) {
               variant="bordered"
               size="lg"
               className="nunito mt-2 mb-1"
-              isDisabled={!(inputPassword && inputUsername)}
+              isDisabled={!(inputPassword && inputEmail)}
               onClick={loginProceed}
             >
               Login

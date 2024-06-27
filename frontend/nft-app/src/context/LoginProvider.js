@@ -1,14 +1,36 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 const LoginContext = createContext();
 
 const LoginProvider = (props) => {
   const [login, setLogin] = useState(false);
   const [userID, setUserID] = useState();
+  const [username, setUsername] = useState();
+  const [accountname, setAccountname] = useState();
+
+  useEffect(() => {
+    if (localStorage.getItem("login") === "true") {
+      setLogin(true);
+      setUsername(localStorage.getItem("username"));
+      setAccountname(localStorage.getItem("accountname"));
+      setUserID(localStorage.getItem("userid"));
+    }
+  }, []);
 
   return (
     <>
-      <LoginContext.Provider value={{ login, setLogin, userID, setUserID }}>
+      <LoginContext.Provider
+        value={{
+          login,
+          setLogin,
+          userID,
+          setUserID,
+          username,
+          setUsername,
+          accountname,
+          setAccountname,
+        }}
+      >
         {props.children}
       </LoginContext.Provider>
     </>

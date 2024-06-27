@@ -6,6 +6,7 @@ const app = express();
 
 const minting_route = require("./routes/mintRoute");
 const authRoute = require("./routes/authRoute");
+const dataRoute = require("./routes/dataRoute");
 
 env.config();
 
@@ -28,6 +29,7 @@ app.get("/", (req, res) => {
 
 app.use(authRoute)
 app.use(minting_route)
+app.use(dataRoute)
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

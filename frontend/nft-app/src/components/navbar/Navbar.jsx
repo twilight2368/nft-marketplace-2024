@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { BellIcon } from "@heroicons/react/24/solid";
 import { useLoginContext } from "../../context/LoginProvider";
 
+
 const listOfLink = [
   {
     label: "Home",
@@ -36,7 +37,7 @@ const listOfLink = [
 
 export default function Navbar(props) {
   const navigate = useNavigate();
-  const { login, userID } = useLoginContext();
+  const { login, userID, username, accountname } = useLoginContext();
 
   return (
     <div className=" min-h-screen w-full ">
@@ -44,7 +45,7 @@ export default function Navbar(props) {
         <div className=" text-white/0 text-3xl poetsen-one-regular  mr-10 pl-5">
           <Logotext />
         </div>
-        <div className=" flex flex-row justify-center w-1/2 items-center gap-20">
+        <div className=" flex flex-row justify-center w-1/3 items-center gap-20">
           {listOfLink.map((e) => {
             return (
               <>
@@ -60,7 +61,7 @@ export default function Navbar(props) {
             );
           })}
         </div>
-        <div className="dark mr-5 nunito p-0">
+        <div className="dark mr-0 nunito p-0 pl-20">
           <Input
             color="primary"
             size="lg"
@@ -72,7 +73,7 @@ export default function Navbar(props) {
             placeholder="Type here..."
           />
         </div>
-        <div className=" pl-16 ">
+        <div className=" pl-40 ">
           {login ? (
             <>
               <div className=" pl-0 flex flex-row gap-10 ">
@@ -103,8 +104,8 @@ export default function Navbar(props) {
                         src: require("../../assets/images/artistavatar.jpg"),
                       }}
                       className="transition-transform"
-                      description="@tonyreichert"
-                      name="Tony Reichert"
+                      description={"@"+accountname}
+                      name={username}
                     />
                   </DropdownTrigger>
                   <DropdownMenu aria-label="User Actions" variant="flat">
