@@ -4,19 +4,19 @@ import NFTsampleImg from "../../assets/images/nftsample.jpg";
 import PizzaCurrency from "../../assets/icons/pizza.png";
 import { Link } from "react-router-dom";
 
-export default function TopNFTHome() {
+export default function TopNFTHome(props) {
   return (
     <div>
       <Link to={"/nft/1"}>
         <Card className=" bg-black border-1 border-purple-600 shadow-md shadow-blue-600  text-white">
           <CardBody className="overflow-y-hidden p-5 pb-1">
-            <Image src={NFTsampleImg} className="mb-0" />
+            <Image src={"https://ipfs.io/ipfs/"+ props.image} className="mb-0" />
           </CardBody>
           <CardFooter className=" pt-1 pb-4 px-6">
             <div className=" pb-2">
               <div>
                 <span className="nunito text-lg font-bold">
-                  Food, love and NFT
+                  {props.name}
                 </span>
               </div>
               <div className="flex flex-row justify-start items-center gap-1">
@@ -24,7 +24,7 @@ export default function TopNFTHome() {
                   <Image src={PizzaCurrency} className=" h-5 w-5" />
                 </div>
                 <div>
-                  <span>0000</span>
+                  <span>{props.price}</span>
                 </div>
               </div>
             </div>

@@ -92,13 +92,14 @@ minting_route.post(
       }
 
       const insertNFT = await pool.query(
-        "insert into nfts (nft_name, owner, creator, description, token_url, imagePath, mint_transaction, sale_status, price) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
+        "insert into nfts (nft_name, owner, creator, description, token_url, image_url, imagePath ,mint_transaction, sale_status, price) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
         [
           req.body.NFTname,
           req.body.NFTUserID,
           req.body.NFTUserID,
           req.body.NFTdescription,
           metadataPinResponse.data.IpfsHash,
+          imagePinResponse.data.IpfsHash,
           file.path,
           insertTransaction.rows[0]["mint_transaction_id"],
           req.body.NFTsale,
@@ -121,7 +122,7 @@ minting_route.post(
         transaction: dataMint.tx,
       });
     } catch (error) {
-      res.status(400).json({ message: "Something went wrong", error });
+      res.status(500).json({ message: "Something went wrong", error });
     }
   }
 );

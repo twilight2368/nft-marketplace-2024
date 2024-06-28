@@ -20,9 +20,6 @@ export default function Home() {
             <HotNFTDisplay />
           </div>
           <div className="px-28  mb-20">
-            <BroweNFTDisplay />
-          </div>
-          <div className="px-28  mb-20">
             <RandomNFTDisplay />
           </div>
         </div>

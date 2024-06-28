@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Input,
@@ -13,6 +13,29 @@ import { BoltIcon, BoltSlashIcon } from "@heroicons/react/24/outline";
 import TopNFTHome from "../nfts/TopNFTHome";
 
 export default function MarketplaceMenu() {
+  const [nfts, setNFTs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+ useEffect(() => {
+   setLoading(true);
+   fetch("http://localhost:8080/allnfts")
+     .then((res) => {
+       if (!res.ok) {
+         throw new Error("Network response was not ok");
+       }
+       return res.json(); // Ensure we return the parsed JSON
+     })
+     .then((data) => {
+       console.log(data);
+       setNFTs(data);
+       setLoading(false);
+     })
+     .catch((error) => {
+       console.error("Fetch error:", error);
+       setLoading(true);
+     });
+ }, []);
+
   return (
     <div className=" relative">
       <div className="fixed px-20 z-20 bg-black/80 backdrop-blur-sm w-full h-24 flex flex-row items-center gap-10">
@@ -88,35 +111,25 @@ export default function MarketplaceMenu() {
         </div>
       </div>
       <div className=" pt-32 px-20">
-        <div className=" grid grid-cols-6 gap-x-6 gap-y-8">
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-        </div>
+        {loading ? (
+          <>
+            <div className=" w-full text-center">
+              <span className="loading loading-infinity loading-lg"></span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className=" grid grid-cols-6 gap-x-6 gap-y-8">
+              {nfts.map((e) => {
+                return (
+                  <>
+                    <TopNFTHome name={e.nft_name} image={e.image_url} price={e.price} />
+                  </>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

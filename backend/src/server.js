@@ -2,6 +2,7 @@ const express = require("express");
 const env = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 const app = express();
 
 const minting_route = require("./routes/mintRoute");
@@ -26,6 +27,8 @@ app.use(
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
+
+app.use("/images", express.static(path.join(__dirname, "src/assets/uploads")));
 
 app.use(authRoute)
 app.use(minting_route)

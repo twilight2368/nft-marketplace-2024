@@ -74,6 +74,7 @@ module.exports.signin_post = async (req, res) => {
 module.exports.logout_get = async (req, res) => {
   try {
     res.cookie("jwt", "", { maxAge: 1 });
+    res.status(200)
     res.json({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });

@@ -1,6 +1,6 @@
 import React from "react";
 import TopNFTHome from "../nfts/TopNFTHome";
-
+import HotNFTWelcome from "../nfts/HotNFTWelcome";
 export default function HotNFTDisplay() {
   return (
     <div>
@@ -10,11 +10,11 @@ export default function HotNFTDisplay() {
           🔥 Hot & new NFTs
         </h2>
         <div className=" grid grid-cols-5 gap-10 justify-center items-center">
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
-          <TopNFTHome />
+          <HotNFTWelcome />
+          <HotNFTWelcome />
+          <HotNFTWelcome />
+          <HotNFTWelcome />
+          <HotNFTWelcome />
         </div>
       </div>
     </div>
