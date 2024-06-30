@@ -11,6 +11,8 @@ import NFTdetails from "./pages/nft/NFTdetails";
 import DashBoard from "./pages/dashboard/DashBoard";
 import UserInfor from "./pages/user/UserInfor";
 import { LoginProvider } from "./context/LoginProvider";
+import PaymentProcess from "./pages/payments/PaymentProcess";
+
 
 function App() {
   return (
@@ -24,9 +26,10 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="marketplace" element={<MarketplaceNFT />} />
             <Route path="minting" element={<Minting />} />
-            <Route path="nft/:id/" element={<NFTdetails />} />
+            <Route path="nft/:id" element={<NFTdetails />} />
             <Route path="dashboard" element={<DashBoard />} />
             <Route path="account" element={<UserInfor />} />
+            <Route path="payment" element={<PaymentProcess/>} />
             <Route path="*" element={<Notfound />} />
           </Routes>
         </LoginProvider>

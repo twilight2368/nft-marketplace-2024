@@ -9,9 +9,6 @@ export default function DashBoard() {
         <div className=" pt-10 px-40">
           <div className="flex w-full flex-col">
             <Tabs aria-label="Options">
-              <Tab key="Overall" title="Overall">
-                1
-              </Tab>
               <Tab key="MyNFTs" title="My NFTs">
                 2
               </Tab>

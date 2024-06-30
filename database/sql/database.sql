@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS coin(
 CREATE TABLE IF NOT EXISTS coin_transactions(
     transaction_id BIGSERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(user_id) NOT NULL,
-    amount_coin INTEGER NOT NULL,
+    amount_coin TIMESTAMP NOT NULL,
     transaction_date DATE NOT NULL
 );
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS transactions(
     transaction_id BIGSERIAL PRIMARY KEY,
     from_user INTEGER REFERENCES users(user_id) NOT NULL,
     to_user INTEGER REFERENCES users(user_id) NOT NULL,
-    transaction_date DATE NOT NULL,
+    transaction_date TIMESTAMP NOT NULL,
     nft_id INTEGER REFERENCES nfts(nft_id) NOT NULL
 );
 

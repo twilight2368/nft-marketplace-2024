@@ -8,6 +8,7 @@ const app = express();
 const minting_route = require("./routes/mintRoute");
 const authRoute = require("./routes/authRoute");
 const dataRoute = require("./routes/dataRoute");
+const transRoute = require("./routes/transactionRoute");
 
 env.config();
 
@@ -30,9 +31,10 @@ app.get("/", (req, res) => {
 
 app.use("/images", express.static(path.join(__dirname, "src/assets/uploads")));
 
-app.use(authRoute)
-app.use(minting_route)
-app.use(dataRoute)
+app.use(authRoute);
+app.use(minting_route);
+app.use(dataRoute);
+app.use(transRoute);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

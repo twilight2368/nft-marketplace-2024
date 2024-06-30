@@ -15,6 +15,7 @@ import {
 } from "@nextui-org/react";
 import PictureBefore from "../../assets/images/picture.png";
 import { useLoginContext } from "../../context/LoginProvider";
+import { Link } from "react-router-dom";
 
 export default function Minting() {
   const [selectedImage, setSelectedImage] = useState(PictureBefore);
@@ -23,8 +24,10 @@ export default function Minting() {
   const [nftName, setNFTName] = useState(null);
   const [description, setDescription] = useState(null);
   const [price, setPrice] = useState(0);
+  const [minting, setMinting] = useState(false);
+  const [dataLoad, setDataLoad] = useState(null);
 
-  const { username, userID, accountname } = useLoginContext();
+  const { userID, accountname } = useLoginContext();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -40,6 +43,9 @@ export default function Minting() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setMinting(true);
+    setDataLoad(false);
 
     if (nftName && description) {
       const formDataToSend = new FormData();
@@ -60,6 +66,9 @@ export default function Minting() {
 
         const data = await response.json();
         if (response.ok) {
+          setMinting(false);
+          setDataLoad(data);
+          console.log(data);
           console.log("File uploaded successfully:", data);
         } else {
           console.error("Error uploading file:", data);
@@ -154,6 +163,8 @@ export default function Minting() {
                     onChange={(e) => {
                       setPrice(e.target.value);
                     }}
+                    min={0}
+                    max={999}
                   />
                 </CardBody>
                 <CardFooter className=" text-center w-full flex justify-center items-center">
@@ -163,6 +174,59 @@ export default function Minting() {
                 </CardFooter>
               </Card>
             </div>
+          </div>
+          <div>
+            {minting ? (
+              <>
+                <div className=" w-full text-center ">
+                  <div>This process may take a lot of time</div>
+                  <span className="loading loading-infinity loading-lg"></span>
+                </div>
+              </>
+            ) : (
+              <>
+                {dataLoad ? (
+                  <>
+                    <div className=" px-96">
+                      <Card>
+                        <CardBody className=" text-center">
+                          <div className=" text-2xl text-green-300 ">
+                            {dataLoad.message}
+                          </div>
+                          <div>
+                            Ipfs:{" "}
+                            <a
+                              href={"https://ipfs.io/ipfs/" + dataLoad.ipfs}
+                              target="_blank"
+                              className=" text-blue-500"
+                            >
+                              {" "}
+                              {dataLoad.ipfs}
+                            </a>
+                          </div>
+                          <div>
+                            Transaction:{" "}
+                            <a
+                              href={
+                                "https://sepolia.etherscan.io/tx/" +
+                                dataLoad.transaction
+                              }
+                              target="_blank"
+                              className=" text-blue-500"
+                            >
+                              {" "}
+                              {dataLoad.transaction}
+                            </a>
+                          </div>
+                        </CardBody>
+                      </Card>
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
           </div>
         </div>
       </Navbar>

@@ -17,4 +17,6 @@ dataRoute.get(
   dataController.user_dashboard_get
 );
 
+dataRoute.get("/coinprice", dataController.price_get);
+
 module.exports = dataRoute;

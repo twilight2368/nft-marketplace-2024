@@ -134,20 +134,12 @@ export default function Navbar(props) {
                       Minting
                     </DropdownItem>
                     <DropdownItem
-                      key="settings"
+                      key="payment"
                       onClick={(e) => {
-                        navigate("/setting");
+                        navigate("/payment");
                       }}
                     >
-                      Settings
-                    </DropdownItem>
-                    <DropdownItem
-                      key="help_and_feedback"
-                      onClick={(e) => {
-                        navigate("/help");
-                      }}
-                    >
-                      Help & Feedback
+                      Add coins
                     </DropdownItem>
                     <DropdownItem key="logout" color="danger">
                       Log Out

@@ -83,32 +83,6 @@ export default function MarketplaceMenu() {
             className="w-full"
           />
         </div>
-        <div>
-          <Dropdown className="dark">
-            <DropdownTrigger>
-              <Button
-                size="md"
-                variant="shadow"
-                color="primary"
-                className="nunito"
-              >
-                NFT tags
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-              className="dark"
-              selectionMode="multiple"
-              closeOnSelect={false}
-            >
-              <DropdownItem>item 1</DropdownItem>
-              <DropdownItem>item 1</DropdownItem>
-              <DropdownItem>item 1</DropdownItem>
-              <DropdownItem>item 1</DropdownItem>
-              <DropdownItem>item 1</DropdownItem>
-              <DropdownItem>item 1</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
       </div>
       <div className=" pt-32 px-20">
         {loading ? (
@@ -123,7 +97,7 @@ export default function MarketplaceMenu() {
               {nfts.map((e) => {
                 return (
                   <>
-                    <TopNFTHome name={e.nft_name} image={e.image_url} price={e.price} />
+                    <TopNFTHome id={e.nft_id} name={e.nft_name} image={e.image_url} price={e.price} />
                   </>
                 );
               })}

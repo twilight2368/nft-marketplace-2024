@@ -20,11 +20,11 @@ module.exports.nft_get = async (req, res) => {
 };
 
 module.exports.one_nft_get = async (req, res) => {
-  //console.log(req.params);
+  console.log(req.params["id"]);
 
   try {
     const data = await pool.query(
-      "select nft_id, nfts.nft_name, nfts.description, nfts.sale_status, nfts.price, nfts.token_url, nfts.image_url ,users.user_name, mint_transactions.transaction_hash  from (nfts join users on (nfts.creator = users.user_id) join mint_transactions on (mint_transactions.mint_transaction_id = nfts.mint_transaction)) where nft_id = $1",
+      "select nft_id, nfts.nft_name, nfts.description, nfts.sale_status, nfts.price, nfts.token_url, nfts.image_url, nfts.creator ,users.user_name, mint_transactions.transaction_hash  from (nfts join users on (nfts.creator = users.user_id) join mint_transactions on (mint_transactions.mint_transaction_id = nfts.mint_transaction)) where nft_id = $1",
       [req.params["id"]]
     );
     console.log(data);
@@ -273,6 +273,24 @@ module.exports.sale_nft_by_users_get = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: error.messages,
+    });
+  }
+};
+
+module.exports.price_get = async (req, res) => {
+  try {
+    const data = await pool.query("select * from coin");
+
+    if (data.rowCount === 0) {
+      throw new Error("Some thing went wrong")
+    }
+
+    console.log(data.rows[0]);
+
+    res.status(200).json(data.rows[0]);
+  } catch (error) {
+    res.status(500).json({
+      messages: error.messages,
     });
   }
 };
