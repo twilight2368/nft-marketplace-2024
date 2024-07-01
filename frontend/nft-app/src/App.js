@@ -12,7 +12,8 @@ import DashBoard from "./pages/dashboard/DashBoard";
 import UserInfor from "./pages/user/UserInfor";
 import { LoginProvider } from "./context/LoginProvider";
 import PaymentProcess from "./pages/payments/PaymentProcess";
-
+import ArtistProfile from "./pages/artist/ArtistProfile";
+import ManageNFT from "./pages/manageNFT/ManageNFT";
 
 function App() {
   return (
@@ -29,7 +30,9 @@ function App() {
             <Route path="nft/:id" element={<NFTdetails />} />
             <Route path="dashboard" element={<DashBoard />} />
             <Route path="account" element={<UserInfor />} />
-            <Route path="payment" element={<PaymentProcess/>} />
+            <Route path="payment" element={<PaymentProcess />} />
+            <Route path="user/:id" element={<ArtistProfile />} />
+            <Route path="managenft" element={<ManageNFT />} />
             <Route path="*" element={<Notfound />} />
           </Routes>
         </LoginProvider>

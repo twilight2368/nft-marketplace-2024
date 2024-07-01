@@ -62,10 +62,10 @@ function FormInput(params) {
         setUsername(data.username);
         setUserID(data.userid);
         setAccountname(data.accountname);
-        localStorage.setItem("login", "true");
+        localStorage.setItem("login-marketplace-ffnft", "true");
         localStorage.setItem("username", data.username);
         localStorage.setItem("accountname", data.accountname);
-        localStorage.setItem("userid", data.userid)
+        localStorage.setItem("userid", data.userid);
         navigate("/home");
       })
       .catch((e) => {

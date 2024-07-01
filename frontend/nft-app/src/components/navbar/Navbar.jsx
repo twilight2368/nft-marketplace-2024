@@ -19,7 +19,6 @@ import { useNavigate } from "react-router-dom";
 import { BellIcon } from "@heroicons/react/24/solid";
 import { useLoginContext } from "../../context/LoginProvider";
 
-
 const listOfLink = [
   {
     label: "Home",
@@ -38,6 +37,30 @@ const listOfLink = [
 export default function Navbar(props) {
   const navigate = useNavigate();
   const { login, userID, username, accountname } = useLoginContext();
+  const { setLogin, setUserID, setUsername, setAccountname } =
+    useLoginContext();
+
+  const logOut = async () => {
+    fetch("http://localhost:8080/logout", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("successfull logout");
+        localStorage.removeItem("username");
+        localStorage.removeItem("accountname");
+        localStorage.removeItem("userid");
+        setLogin(false);
+        setUserID(null);
+        setUsername(null);
+        setAccountname(null);
+        localStorage.setItem("login-marketplace-ffnft", "fasle");
+        navigate("/");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <div className=" min-h-screen w-full ">
@@ -104,7 +127,7 @@ export default function Navbar(props) {
                         src: require("../../assets/images/artistavatar.jpg"),
                       }}
                       className="transition-transform"
-                      description={"@"+accountname}
+                      description={"@" + accountname}
                       name={username}
                     />
                   </DropdownTrigger>
@@ -141,7 +164,7 @@ export default function Navbar(props) {
                     >
                       Add coins
                     </DropdownItem>
-                    <DropdownItem key="logout" color="danger">
+                    <DropdownItem key="logout" color="danger" onClick={logOut}>
                       Log Out
                     </DropdownItem>
                   </DropdownMenu>

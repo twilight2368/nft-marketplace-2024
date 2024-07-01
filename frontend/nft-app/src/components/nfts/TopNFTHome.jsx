@@ -9,10 +9,11 @@ export default function TopNFTHome(props) {
     <div>
       <Link to={"/nft/" + props.id}>
         <Card className=" bg-black border-1 border-purple-600 shadow-md shadow-blue-600  text-white">
-          <CardBody className="overflow-y-hidden p-5 pb-1">
+          <CardBody className="overflow-y-hidden flex justify-center items-center p-5 pb-1">
             <Image
               src={process.env.REACT_APP_PINATA_GATEWAY  + props.image}
-              className="mb-0"
+              className="mb-0 h-60 w-60"
+              isBlurred
             />
           </CardBody>
           <CardFooter className=" pt-1 pb-4 px-6">

@@ -9,11 +9,11 @@ const LoginProvider = (props) => {
   const [accountname, setAccountname] = useState();
 
   useEffect(() => {
-    if (localStorage.getItem("login") === "true") {
+    if (localStorage.getItem("login-marketplace-ffnft") === "true") {
       setLogin(true);
       setUsername(localStorage.getItem("username"));
       setAccountname(localStorage.getItem("accountname"));
-      setUserID(localStorage.getItem("userid"));
+      setUserID(parseInt(localStorage.getItem("userid")));
     }
   }, []);
 

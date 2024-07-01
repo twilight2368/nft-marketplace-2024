@@ -122,6 +122,7 @@ minting_route.post(
         transaction: dataMint.tx,
       });
     } catch (error) {
+      console.log(error);
       res.status(500).json({ message: "Something went wrong", error });
     }
   }

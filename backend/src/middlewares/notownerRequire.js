@@ -12,8 +12,9 @@ async function notownerRequire(req, res, next) {
     if (data.rowCount === 0) {
       throw new Error("No data found");
     }
-
+    
     if (data.rows[0].owner === parseInt(userid)) {
+      console.log("here", data.rows[0].owner);
       throw new Error("It is NFT owner");
     }
 

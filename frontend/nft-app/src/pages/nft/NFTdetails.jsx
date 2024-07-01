@@ -5,10 +5,18 @@ import NFTImage from "../../assets/images/nftsample.jpg";
 import { Button, Chip, Image } from "@nextui-org/react";
 import { useParams } from "react-router-dom";
 import coinIcon from "../../assets/icons/pizza.png";
+import { useLoginContext } from "../../context/LoginProvider";
 export default function NFTdetails() {
   const [dataLoad, setDataLoad] = useState(null);
+  const [errorMessage, setErrorMessage] = useState();
+  const [processing, setProcessing] = useState(false);
+  const [txcomplete, setTxcomplete] = useState(false);
+  const { userID } = useLoginContext();
   const params = useParams();
+
   useEffect(() => {
+    setProcessing(false);
+    setTxcomplete(false);
     fetch("http://localhost:8080/nft/" + params.id)
       .then((res) => {
         if (!res.ok) {
@@ -23,8 +31,48 @@ export default function NFTdetails() {
       })
       .catch((e) => {
         console.log(e.messages);
+        setErrorMessage(e.messages);
       });
   }, []);
+
+  const purchaseNFT = async (e) => {
+    e.preventDefault();
+
+    const user_id = parseInt(userID);
+    setProcessing(true);
+    if (dataLoad) {
+      const dataSend = {
+        userid: user_id,
+        nftid: dataLoad.nft_id,
+      };
+      fetch("http://localhost:8080/make_nft_transactions", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(dataSend),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setTxcomplete(true);
+          console.log(data);
+          if (data.messages === "Done!") {
+            setErrorMessage();
+          } else {
+            setErrorMessage("Some thing went wrong");
+          }
+        })
+        .catch((e) => {
+          setTxcomplete(true);
+          setErrorMessage("Some thing went wrong");
+          console.log(e.messages);
+        });
+    }
+  };
+
   return (
     <div>
       <Navbar>
@@ -62,13 +110,33 @@ export default function NFTdetails() {
                   Description: {dataLoad ? <>{dataLoad.description}</> : <></>}
                 </div>
                 <div className="text-lg mb-5">
-                  URI:{" "}
+                  URI: <br />
                   {dataLoad ? (
                     <a
                       href={"https://ipfs.io/ipfs/" + dataLoad.token_url}
                       className="text-blue-500 underline"
+                      target="_blank"
                     >
                       {dataLoad.token_url}
+                    </a>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="text-lg mb-5">
+                  Mint transaction: <br />
+                  {dataLoad ? (
+                    <a
+                      href={
+                        "https://sepolia.etherscan.io/tx/" +
+                        dataLoad.transaction_hash
+                      }
+                      target="_blank"
+                      className="text-blue-500 underline"
+                    >
+                      <span className="w-96 overflow-hidden">
+                        {dataLoad.transaction_hash}
+                      </span>
                     </a>
                   ) : (
                     <></>
@@ -82,6 +150,7 @@ export default function NFTdetails() {
                         variant="bordered"
                         color="primary"
                         disabled={!dataLoad.sale_status}
+                        onClick={purchaseNFT}
                       >
                         <Image src={coinIcon} className=" h-5 w-5" />
                         <span className="text-white">{dataLoad.price}</span>
@@ -116,6 +185,8 @@ export default function NFTdetails() {
                       process.env.REACT_APP_PINATA_GATEWAY + dataLoad.image_url
                     }
                     isBlurred
+                    className="h-96 w-96"
+                  
                   />
                 </>
               ) : (
@@ -123,6 +194,40 @@ export default function NFTdetails() {
               )}
             </div>
           </div>
+        </div>
+        <div>
+          {processing ? (
+            <>
+              <div className="w-full min-h-80 text-center">
+                {txcomplete ? (
+                  <>
+                    {errorMessage ? (
+                      <>
+                        <span className="nunito text-red-400">
+                          {errorMessage ? errorMessage : ""}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="nunito text-green-300">
+                          Transaction success
+                        </span>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <div>Transaction is on process please wait ...</div>
+                    <div>
+                      <span className="loading loading-bars loading-lg"></span>
+                    </div>
+                  </>
+                )}
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </Navbar>
       <MainFooter />
