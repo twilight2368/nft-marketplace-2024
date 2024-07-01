@@ -186,7 +186,6 @@ export default function NFTdetails() {
                     }
                     isBlurred
                     className="h-96 w-96"
-                  
                   />
                 </>
               ) : (
