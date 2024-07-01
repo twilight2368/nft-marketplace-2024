@@ -40,7 +40,6 @@ module.exports.handle_success_transaction = async (req, res) => {
       "update users set amount = amount + $1 where user_id = $2",
       [req.body.total_coin, req.body.userId]
     );
-    
 
     res.status(200).json({
       messages: "Ok!",
@@ -48,6 +47,42 @@ module.exports.handle_success_transaction = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
+      messages: "something went wrong",
+    });
+  }
+};
+
+module.exports.make_transaction_nft_post = async (req, res) => {
+  try {
+    const to = req.destination_id;
+    const from = req.body.userid;
+    const nftid = req.body.nftid;
+    const price = req.price_nft;
+
+    console.log(to);
+    console.log(from);
+    console.log(nftid);
+    console.log(price);
+
+    const insert = await pool.query(
+      "insert into tranactions (from_user, to_user, nft_id ,transaction_date, amount) values ($1, $2, $3, now(), $4)",
+      [from, to, nftid, price]
+    );
+
+    const update_1 = await pool.query(
+      "update users set amount = amount - price where userid = $1",
+      [from]
+    );
+    const update_2 = await pool.query(
+      "update users set amount = amount + price where userid = $1",
+      [to]
+    );
+
+    res.status(200).json({
+      messages: "Done!",
+    });
+  } catch (error) {
+    res.status.json({
       messages: "something went wrong",
     });
   }

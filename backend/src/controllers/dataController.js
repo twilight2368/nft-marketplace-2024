@@ -227,9 +227,10 @@ module.exports.change_email_post = async (req, res) => {
 
 module.exports.change_nft_sale_post = async (req, res) => {
   const nft_id = req.body.nft_id;
-
+  const status = nft.body.status;
   try {
-    const update = pool.query("update nfts set (sale = t) where nft_id = $1", [
+    const update = pool.query("update nfts set (sale = $1) where nft_id = $2", [
+      status,
       nft_id,
     ]);
 
@@ -244,16 +245,17 @@ module.exports.change_nft_sale_post = async (req, res) => {
 };
 
 module.exports.nft_not_sale_user_get = async (req, res) => {
-  console.log(req.params["userid"]);
+  //console.log(req.params["userid"]);
   const user_id = req.params["userid"];
   try {
     const data = await pool.query(
-      "select nft_id, nft_name, image_url, price from nfts where owner = $1 and sale = 0",
+      "select nft_id, nft_name, image_url, price, sale_status from nfts where owner = $1 and sale_status = false",
       [user_id]
     );
 
     res.status(200).json(data.rows);
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       message: error.messages,
     });
@@ -265,12 +267,13 @@ module.exports.sale_nft_by_users_get = async (req, res) => {
 
   try {
     const data = await pool.query(
-      "select nft_id, nft_name, image_url, price from nfts where sale = 1 and owner = $1",
+      "select nft_id, nft_name, image_url, price, sale_status from nfts where sale_status = true and owner = $1",
       [userid]
     );
 
     res.json(data.rows);
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       message: error.messages,
     });
@@ -282,7 +285,7 @@ module.exports.price_get = async (req, res) => {
     const data = await pool.query("select * from coin");
 
     if (data.rowCount === 0) {
-      throw new Error("Some thing went wrong")
+      throw new Error("Some thing went wrong");
     }
 
     console.log(data.rows[0]);
@@ -291,6 +294,133 @@ module.exports.price_get = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       messages: error.messages,
+    });
+  }
+};
+
+module.exports.dashboard_data_get = async (req, res) => {
+  const userid = req.params["id"];
+
+  try {
+    const data_1 = await pool.query(
+      "select nft_id, nft_name, image_url, price from nfts where creator = $1",
+      [userid]
+    );
+
+    const data_2 = await pool.query(
+      "select nft_id, nft_name, image_url, price from nfts where owner = $1",
+      [userid]
+    );
+
+    const data_3 = await pool.query(
+      "select sum(price) from nfts where creator = $1",
+      [userid]
+    );
+
+    const data_4 = await pool.query(
+      "select sum(price) from  nfts where owner = $1",
+      [userid]
+    );
+
+    const data_5 = await pool.query(
+      "select amount from users where user_id = $1",
+      [userid]
+    );
+
+    res.json({
+      amount: data_5.rows[0],
+      created_nfts: data_1.rows,
+      owned_nft: data_2.rows,
+      total_created: data_1.rowCount,
+      total_owned: data_2.rowCount,
+      volume_created: data_3.rows[0],
+      volume_owned: data_4.rows[0],
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      messages: "Bad request",
+    });
+  }
+};
+
+module.exports.set_nft_to_not_sale_post = async (req, res) => {
+  try {
+    const nft_id = req.body.nftid;
+    console.log(nft_id);
+    const checkData = await pool.query(
+      "select sale_status from nfts where nft_id = $1",
+      [nft_id]
+    );
+
+    if (checkData.rowCount === 0) {
+      console.log(1);
+      res.status(400).json({
+        messages: "Bad request 2",
+      });
+    }
+
+    if (checkData.rows[0].sale_status === false) {
+      console.log(2);
+      res.status(400).json({
+        messages: "Bad request 1",
+      });
+    }
+
+    const update = await pool.query(
+      "update nfts set sale_status = false where nft_id = $1",
+      [nft_id]
+    );
+
+    console.log(update);
+
+    res.status(200).json({
+      messages: "Update successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      messages: "Something went wrong!",
+    });
+  }
+};
+
+module.exports.set_nft_to_sale_post = async (req, res) => {
+  try {
+    const nft_id = req.body.nftid;
+    const price = req.body.price;
+    console.log(nft_id, price);
+    const checkData = await pool.query(
+      "select sale_status from nfts where nft_id = $1",
+      [nft_id]
+    );
+
+    if (checkData.rowCount === 0) {
+      console.log(1);
+      res.status(400).json({
+        messages: "Bad request 2",
+      });
+    }
+
+    if (checkData.rows[0].sale_status === true) {
+      console.log(2);
+      res.status(400).json({
+        messages: "Bad request 1",
+      });
+    }
+
+    const update = await pool.query(
+      "update nfts set sale_status = true, price = $1 where nft_id = $2",
+      [price, nft_id]
+    );
+
+    console.log(update);
+
+    res.status(200).json({
+      messages: "Update successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      messages: "Something went wrong!",
     });
   }
 };
